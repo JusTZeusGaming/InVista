@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-ink: 10 10 12;
+  --color-panel: 20 20 24;
+  --color-soft: 158 160 175;
+  --color-line: 255 255 255;
+  --color-gold: 248 202 124;
+  --color-mint: 110 236 220;
+  --color-coral: 255 146 109;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background-color: rgb(var(--color-ink));
+  color: white;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: rgba(248, 202, 124, 0.3);
+  color: white;
+}
+
+.mesh-panel {
+  position: relative;
+}
+
+.mesh-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 36px 36px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.6), transparent);
+  pointer-events: none;
+}

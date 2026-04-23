@@ -1,9 +1,11 @@
 import {
-  ArrowUpRight,
+  ArrowRight,
   BarChart3,
   Clock3,
   Eye,
   MonitorPlay,
+  ShieldCheck,
+  ShoppingCart,
   Users,
 } from "lucide-react";
 import { AnimatedCounter } from "@/components/animated-counter";
@@ -13,119 +15,174 @@ import { DataFootnote, FootnoteMark } from "@/components/data-footnote";
 import { Reveal } from "@/components/reveal";
 import { SectionHeading } from "@/components/section-heading";
 import {
-  categoryIcons,
-  contentRules,
-  differentiation,
-  heroMetrics,
   monthlyData,
-  purchaseExamples,
+  processSteps,
   rotationStats,
-  scarcityPoints,
+  seasonalOffer,
   siteConfig,
-  trustPoints,
   venueInfo,
 } from "@/lib/site-data";
 import { formatNumber } from "@/lib/utils";
 
+function euro(value: number) {
+  return new Intl.NumberFormat("it-IT", {
+    style: "currency",
+    currency: "EUR",
+    minimumFractionDigits: value % 1 === 0 ? 0 : 2,
+    maximumFractionDigits: 2,
+  }).format(value);
+}
+
+const stepsIcons = [ShoppingCart, MonitorPlay, Eye];
+
+const quickProofs = [
+  "Schermo sopra la cassa",
+  "Massimo 10 attività in rotazione",
+  "Pubblico locale e turistico",
+];
+
+const whyItWorks = [
+  {
+    title: "Posizione forte",
+    text: "Lo schermo è nel punto più sensibile del supermercato: sopra la cassa, davanti alla fila.",
+    icon: Eye,
+  },
+  {
+    title: "Rotazione corta",
+    text: `Con 10 slot da 10 secondi, il giro completo dura circa ${rotationStats.rotationSecondsAtFullCapacity} secondi.`,
+    icon: Clock3,
+  },
+  {
+    title: "Territorio giusto",
+    text: "Parli a persone già presenti in zona, già fuori casa e spesso già in un momento di spesa.",
+    icon: Users,
+  },
+];
+
+const commercialCards = [
+  {
+    eyebrow: "Formula mese",
+    title: "Dal giorno 1 al giorno 30 o 31",
+    text: `Prezzi mensili da ${monthlyData[0].monthlyPrice} euro a ${monthlyData[3].monthlyPrice} euro, in base alla forza del periodo.`,
+    href: "/prezzi",
+    label: "Vedi i mesi",
+  },
+  {
+    eyebrow: "Formula settimana",
+    title: "Blocchi chiari da 7 giorni",
+    text: "2 settimane = sconto totale del 10%. 3 settimane = sconto totale del 20%. Dalla quarta si passa al mese.",
+    href: "/contatti",
+    label: "Scegli il periodo",
+  },
+  {
+    eyebrow: "Stagione completa",
+    title: `${seasonalOffer.discountPercent}% di sconto sul totale`,
+    text: `Sull'intero periodo ${seasonalOffer.period} il totale passa da ${euro(seasonalOffer.fullPrice)} a ${euro(seasonalOffer.discountedPrice)}.`,
+    href: "/prezzi",
+    label: "Guarda l'offerta",
+  },
+];
+
 export default function HomePage() {
-  const peakMonth = monthlyData.find((item) => item.month === "Agosto") ?? monthlyData[3];
+  const july = monthlyData.find((item) => item.month === "Luglio") ?? monthlyData[2];
+  const august = monthlyData.find((item) => item.month === "Agosto") ?? monthlyData[3];
 
   return (
     <>
       <section className="mesh-panel relative overflow-hidden px-5 pb-16 pt-16 md:px-8 md:pb-24 md:pt-24">
-        <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[1.08fr_0.92fr] lg:items-center">
+        <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[1.06fr_0.94fr] lg:items-center">
           <Reveal>
             <div>
               <div className="mb-6 flex flex-wrap gap-3">
-                <span className="rounded-full border border-gold/35 bg-gold/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-gold">
-                  Schermo sopra la cassa
-                </span>
-                <span className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-white/65">
-                  {venueInfo.name} · {venueInfo.place}
-                </span>
+                {quickProofs.map((item) => (
+                  <span
+                    key={item}
+                    className="rounded-full border border-gold/35 bg-gold/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-gold"
+                  >
+                    {item}
+                  </span>
+                ))}
               </div>
 
-              <h1 className="max-w-4xl font-display text-5xl font-bold leading-[0.95] tracking-tight text-white md:text-7xl">
-                Se i tuoi clienti passano da qui,
-                <span className="text-gold"> la tua pubblicità dovrebbe esserci.</span>
+              <h1 className="max-w-5xl font-display text-5xl font-bold leading-[0.94] tracking-tight text-white md:text-7xl">
+                Pubblicita su schermo dentro un supermercato reale.
               </h1>
 
-              <p className="mt-6 max-w-2xl text-lg leading-8 text-white/72 md:text-xl">
-                Uno schermo dentro {venueInfo.name}, a {venueInfo.place}, in un supermercato turistico dove il pubblico locale e quello di passaggio
-                si fermano davvero. Il tuo annuncio gira tutto il giorno, proprio sopra la cassa.
+              <p className="mt-6 max-w-3xl text-lg leading-8 text-white/74 md:text-xl">
+                Il tuo annuncio gira ogni giorno dentro {venueInfo.name}, a {venueInfo.place}, sopra la cassa, davanti a clienti veri.
+                Non online. Non da scrollare. Dentro il punto vendita.
               </p>
 
               <div className="mt-8 flex flex-wrap gap-3">
                 <ButtonLink href="/contatti">{siteConfig.primaryCta}</ButtonLink>
-                <ButtonLink href="/progetto" variant="secondary">
-                  Scopri come funziona
+                <ButtonLink href="/prezzi" variant="secondary">
+                  Vedi prezzi e periodi
                 </ButtonLink>
               </div>
-              <p className="mt-4 text-sm text-white/58">
-                Oppure verifica al volo se la tua categoria è ancora libera.
-              </p>
 
               <div className="mt-10 grid gap-4 sm:grid-cols-3">
-                {heroMetrics.map((metric) => (
-                  <div key={metric.label} className="rounded-[24px] border border-white/10 bg-white/5 p-4">
-                    <div className="font-display text-3xl font-bold text-white">{metric.value}</div>
-                    <p className="mt-2 text-sm font-medium text-white/70">{metric.label}</p>
-                    <p className="mt-1 text-xs uppercase tracking-[0.18em] text-gold">{metric.description}</p>
-                  </div>
-                ))}
+                <div className="rounded-[24px] border border-white/10 bg-white/5 p-4">
+                  <div className="font-display text-3xl font-bold text-white">522</div>
+                  <p className="mt-2 text-sm font-medium text-white/70">Visualizzazioni del tuo annuncio al giorno</p>
+                  <p className="mt-1 text-xs uppercase tracking-[0.18em] text-gold">Con rotazione piena</p>
+                </div>
+                <div className="rounded-[24px] border border-white/10 bg-white/5 p-4">
+                  <div className="font-display text-3xl font-bold text-white">58.860+</div>
+                  <p className="mt-2 text-sm font-medium text-white/70">Presenze minime stimate nel mese piu forte</p>
+                  <p className="mt-1 text-xs uppercase tracking-[0.18em] text-gold">Agosto<FootnoteMark /></p>
+                </div>
+                <div className="rounded-[24px] border border-white/10 bg-white/5 p-4">
+                  <div className="font-display text-3xl font-bold text-white">10</div>
+                  <p className="mt-2 text-sm font-medium text-white/70">Attivita massime in rotazione</p>
+                  <p className="mt-1 text-xs uppercase tracking-[0.18em] text-gold">Slot limitati</p>
+                </div>
               </div>
             </div>
           </Reveal>
 
           <Reveal className="lg:pl-8">
-            <div className="relative rounded-[36px] border border-white/10 bg-gradient-to-br from-white/10 to-white/[0.03] p-6 shadow-glow">
-              <div className="absolute -right-6 -top-6 hidden h-24 w-24 rounded-full border border-gold/30 bg-gold/10 blur-sm md:block" />
-              <div className="absolute -bottom-4 left-10 hidden h-16 w-16 rounded-full bg-mint/15 blur-xl md:block" />
+            <div className="rounded-[36px] border border-white/10 bg-gradient-to-br from-white/10 to-white/[0.03] p-6 shadow-glow">
               <div className="rounded-[30px] border border-white/10 bg-black/30 p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-xs uppercase tracking-[0.24em] text-white/45">Picco stagionale</p>
-                    <h2 className="mt-2 font-display text-3xl font-bold text-white">{peakMonth.month}</h2>
-                  </div>
-                  <div className="rounded-full border border-gold/35 bg-gold/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.2em] text-gold">
-                    Supermercato fisico
-                  </div>
-                </div>
+                <p className="text-xs font-bold uppercase tracking-[0.28em] text-gold">Capirlo in 10 secondi</p>
+                <h2 className="mt-4 font-display text-3xl font-bold text-white md:text-4xl">
+                  Cosa compri, in pratica.
+                </h2>
 
-                <div className="mt-8 rounded-[28px] border border-gold/20 bg-gradient-to-br from-gold/12 to-transparent p-5">
-                  <p className="text-sm uppercase tracking-[0.24em] text-white/45">Presenze minime stimate / mese</p>
-                  <div className="mt-3 font-display text-5xl font-bold text-white">
-                    <AnimatedCounter value={peakMonth.monthlyPeopleMin} suffix="+" />
-                  </div>
-                  <p className="mt-3 max-w-md text-sm leading-7 text-white/68">
-                    Basate su {formatNumber(peakMonth.monthlyReceipts)} scontrini<FootnoteMark /> mensili e almeno 2 persone per scontrino.
-                  </p>
-                </div>
-
-                <div className="mt-6 grid gap-4 sm:grid-cols-2">
-                  <div className="rounded-[24px] border border-white/10 bg-white/5 p-4">
+                <div className="mt-8 grid gap-4">
+                  <div className="rounded-[24px] border border-white/10 bg-white/5 p-5">
                     <div className="flex items-center gap-3 text-white">
-                      <Clock3 className="h-5 w-5 text-gold" />
-                      <span className="text-sm font-semibold">Rotazione breve</span>
+                      <MonitorPlay className="h-5 w-5 text-gold" />
+                      <span className="text-sm font-semibold">Uno spazio sullo schermo</span>
                     </div>
-                    <p className="mt-3 text-sm leading-7 text-white/65">
-                      Con 10 slot da 10 secondi, il giro completo dura circa 1 minuto e 40.
+                    <p className="mt-3 text-sm leading-7 text-white/68">
+                      1 slot = massimo 10 secondi. Il contenuto lo invia l'attivita gia pronto.
                     </p>
                   </div>
-                  <div className="rounded-[24px] border border-white/10 bg-white/5 p-4">
+
+                  <div className="rounded-[24px] border border-white/10 bg-white/5 p-5">
                     <div className="flex items-center gap-3 text-white">
-                      <Eye className="h-5 w-5 text-gold" />
-                      <span className="text-sm font-semibold">Fila alla cassa</span>
+                      <ShoppingCart className="h-5 w-5 text-gold" />
+                      <span className="text-sm font-semibold">Dentro {venueInfo.name}</span>
                     </div>
-                    <p className="mt-3 text-sm leading-7 text-white/65">
-                      Lo schermo è sopra la cassa: chi aspetta lo vede per tutta la permanenza in fila.
+                    <p className="mt-3 text-sm leading-7 text-white/68">
+                      Lo schermo e sopra la cassa, nel punto in cui la gente si ferma davvero.
+                    </p>
+                  </div>
+
+                  <div className="rounded-[24px] border border-gold/20 bg-gold/10 p-5">
+                    <div className="flex items-center gap-3 text-white">
+                      <BarChart3 className="h-5 w-5 text-gold" />
+                      <span className="text-sm font-semibold">Numeri basati su scontrini reali</span>
+                    </div>
+                    <p className="mt-3 text-sm leading-7 text-white/75">
+                      Le stime partono dai corrispettivi ufficiali della stagione precedente, non da impression inventate.
                     </p>
                   </div>
                 </div>
 
-                <div className="mt-6 flex items-center gap-3 rounded-[24px] border border-coral/25 bg-coral/10 px-4 py-4 text-sm text-white/80">
-                  <ArrowUpRight className="h-5 w-5 text-coral" />
-                  <span>Se il tuo concorrente entra prima, quel punto lo occupa lui.</span>
+                <div className="mt-6 flex items-center gap-3 rounded-[24px] border border-coral/25 bg-coral/10 px-4 py-4 text-sm text-white/82">
+                  <ArrowRight className="h-5 w-5 text-coral" />
+                  <span>Se il tuo concorrente blocca prima il periodo, quello spazio non e piu tuo.</span>
                 </div>
               </div>
             </div>
@@ -135,23 +192,60 @@ export default function HomePage() {
       </section>
 
       <section className="px-5 py-10 md:px-8 md:py-16">
-        <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+        <div className="mx-auto max-w-7xl">
           <Reveal>
             <SectionHeading
-              eyebrow="Perché funziona"
-              title="Il supermercato fa il resto."
-              description="Pubblico in zona, orario esteso, fila alla cassa, schermo sempre acceso e passaggi continui dello stesso messaggio."
+              eyebrow="Come Funziona"
+              title="Tre passaggi. Nessun giro lungo."
+              description="La pagina deve farti capire subito come si compra e cosa succede dopo."
             />
           </Reveal>
-          <div className="grid gap-4">
-            {differentiation.map((item) => (
-              <Reveal key={item.title}>
-                <div className="rounded-[28px] border border-white/10 bg-white/5 p-6">
-                  <h3 className="font-display text-2xl font-bold text-white">{item.title}</h3>
-                  <p className="mt-3 text-sm leading-7 text-white/68">{item.text}</p>
-                </div>
-              </Reveal>
-            ))}
+
+          <div className="mt-10 grid gap-4 md:grid-cols-3">
+            {processSteps.map((step, index) => {
+              const Icon = stepsIcons[index];
+              return (
+                <Reveal key={step.title}>
+                  <div className="rounded-[30px] border border-white/10 bg-white/5 p-6">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-gold/30 bg-gold/10 text-gold">
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <p className="mt-4 text-xs uppercase tracking-[0.24em] text-white/45">Step {index + 1}</p>
+                    <h3 className="mt-2 font-display text-2xl font-bold text-white">{step.title}</h3>
+                    <p className="mt-3 text-sm leading-7 text-white/68">{step.text}</p>
+                  </div>
+                </Reveal>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <section className="px-5 py-10 md:px-8 md:py-16">
+        <div className="mx-auto max-w-7xl">
+          <Reveal>
+            <SectionHeading
+              eyebrow="Perche Conviene"
+              title="Il vantaggio non e teorico. E nella posizione dello schermo."
+              description="Qui il punto non e solo quante persone passano. E come, dove e per quanto tempo vedono il messaggio."
+            />
+          </Reveal>
+
+          <div className="mt-10 grid gap-4 md:grid-cols-3">
+            {whyItWorks.map((item) => {
+              const Icon = item.icon;
+              return (
+                <Reveal key={item.title}>
+                  <div className="rounded-[30px] border border-white/10 bg-white/5 p-6">
+                    <div className="flex items-center gap-3 text-white">
+                      <Icon className="h-5 w-5 text-gold" />
+                      <span className="text-sm font-semibold">{item.title}</span>
+                    </div>
+                    <p className="mt-4 text-sm leading-7 text-white/68">{item.text}</p>
+                  </div>
+                </Reveal>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -160,22 +254,13 @@ export default function HomePage() {
         <div className="mx-auto max-w-7xl rounded-[36px] border border-white/10 bg-white/5 p-8 md:p-10">
           <Reveal>
             <SectionHeading
-              eyebrow="Dati che contano"
-              title="Qui i numeri partono dal registratore, non dalla fantasia."
-              description="Ogni scontrino diventa una base concreta per stimare il passaggio nel punto vendita. Luglio e agosto sono i mesi in cui il potenziale si alza davvero."
+              eyebrow="Numeri Reali"
+              title="Pochi numeri, ma quelli che servono."
+              description="Il messaggio chiave deve essere semplice: persone reali nel supermercato, visualizzazioni ripetute, slot limitati."
             />
           </Reveal>
-          <div className="mt-10 grid gap-4 md:grid-cols-3">
-            {trustPoints.map((point) => (
-              <Reveal key={point}>
-                <div className="rounded-[24px] border border-white/10 bg-black/20 p-5 text-sm leading-7 text-white/72">
-                  {point}
-                </div>
-              </Reveal>
-            ))}
-          </div>
 
-          <div className="mt-10 grid gap-4 md:grid-cols-3">
+          <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
             <Reveal>
               <div className="rounded-[28px] border border-gold/25 bg-gold/10 p-6">
                 <div className="flex items-center gap-3 text-white">
@@ -183,11 +268,12 @@ export default function HomePage() {
                   <span className="text-sm font-semibold">Luglio</span>
                 </div>
                 <div className="mt-4 font-display text-4xl font-bold text-white">
-                  <AnimatedCounter value={52980} suffix="+" />
+                  <AnimatedCounter value={july.monthlyPeopleMin} suffix="+" />
                 </div>
-                <p className="mt-2 text-sm text-white/65">Presenze minime stimate nel mese<FootnoteMark />.</p>
+                <p className="mt-2 text-sm text-white/68">Presenze minime stimate nel mese<FootnoteMark />.</p>
               </div>
             </Reveal>
+
             <Reveal>
               <div className="rounded-[28px] border border-gold/35 bg-gradient-to-br from-gold/18 to-mint/10 p-6 shadow-glow">
                 <div className="flex items-center gap-3 text-white">
@@ -195,28 +281,41 @@ export default function HomePage() {
                   <span className="text-sm font-semibold">Agosto</span>
                 </div>
                 <div className="mt-4 font-display text-4xl font-bold text-white">
-                  <AnimatedCounter value={58860} suffix="+" />
+                  <AnimatedCounter value={august.monthlyPeopleMin} suffix="+" />
                 </div>
-                <p className="mt-2 text-sm text-white/65">Presenze minime stimate nel mese più forte<FootnoteMark />.</p>
+                <p className="mt-2 text-sm text-white/68">
+                  Basate su {formatNumber(august.monthlyReceipts)} scontrini<FootnoteMark /> nel mese piu forte.
+                </p>
               </div>
             </Reveal>
+
             <Reveal>
               <div className="rounded-[28px] border border-white/10 bg-black/20 p-6">
                 <div className="flex items-center gap-3 text-white">
-                  <MonitorPlay className="h-5 w-5 text-gold" />
+                  <Eye className="h-5 w-5 text-gold" />
                   <span className="text-sm font-semibold">Passaggi spot</span>
                 </div>
-                <p className="mt-4 text-lg font-semibold text-white">
-                  Circa {rotationStats.playsPerDayAtFullCapacity} visualizzazioni del tuo annuncio al giorno.
-                </p>
+                <div className="mt-4 font-display text-4xl font-bold text-white">{rotationStats.playsPerDayAtFullCapacity}</div>
+                <p className="mt-2 text-sm text-white/68">Visualizzazioni del tuo annuncio al giorno con rotazione piena.</p>
+              </div>
+            </Reveal>
+
+            <Reveal>
+              <div className="rounded-[28px] border border-white/10 bg-black/20 p-6">
+                <div className="flex items-center gap-3 text-white">
+                  <ShieldCheck className="h-5 w-5 text-gold" />
+                  <span className="text-sm font-semibold">Scarsita reale</span>
+                </div>
+                <div className="mt-4 font-display text-4xl font-bold text-white">{rotationStats.maxSlots}</div>
+                <p className="mt-2 text-sm text-white/68">Attivita massime in rotazione. Quando finiscono, finiscono davvero.</p>
               </div>
             </Reveal>
           </div>
 
           <div className="mt-8 flex flex-wrap gap-3">
-            <ButtonLink href="/dati-visibilita">Esplora i dati completi</ButtonLink>
-            <ButtonLink href="/prezzi" variant="secondary">
-              Vedi i prezzi
+            <ButtonLink href="/dati-visibilita">Vedi tutti i dati</ButtonLink>
+            <ButtonLink href="/progetto" variant="secondary">
+              Approfondisci il progetto
             </ButtonLink>
           </div>
         </div>
@@ -226,108 +325,38 @@ export default function HomePage() {
         <div className="mx-auto max-w-7xl">
           <Reveal>
             <SectionHeading
-              eyebrow="Esempi semplici"
-              title="Come si compra, in pratica"
-              description="Chi arriva qui deve capire subito come trasformare l’idea in una prenotazione concreta."
+              eyebrow="Formule"
+              title="Si compra in modo semplice."
+              description="Chi arriva qui deve capire al volo se gli serve il mese, la settimana o l'intera stagione."
             />
           </Reveal>
-          <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-            {purchaseExamples.map((item) => (
+
+          <div className="mt-10 grid gap-4 md:grid-cols-3">
+            {commercialCards.map((item) => (
               <Reveal key={item.title}>
-                <div className="rounded-[28px] border border-white/10 bg-white/5 p-6">
-                  <h3 className="font-display text-2xl font-bold text-white">{item.title}</h3>
-                  <p className="mt-3 text-sm leading-7 text-white/68">{item.text}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-          <div className="mt-8">
-            <ButtonLink href="/prezzi" variant="secondary">
-              Guarda gli esempi nei prezzi
-            </ButtonLink>
-          </div>
-        </div>
-      </section>
-
-      <section className="px-5 py-10 md:px-8 md:py-16">
-        <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[0.9fr_1.1fr]">
-          <Reveal>
-            <SectionHeading
-              eyebrow="Rotazione"
-              title="Dieci slot massimi. Dieci secondi ciascuno."
-              description="Questo è il punto commerciale più forte: la rotazione resta corta, il messaggio torna spesso e l’attenzione non si disperde."
-            />
-            <div className="mt-8 rounded-[30px] border border-gold/25 bg-gradient-to-b from-gold/14 to-transparent p-6">
-              <p className="text-xs font-bold uppercase tracking-[0.28em] text-gold">Massimo 10 slot</p>
-              <div className="mt-4 flex gap-2">
-                {Array.from({ length: 10 }).map((_, index) => (
-                  <div
-                    key={index}
-                    className={`h-12 flex-1 rounded-2xl ${index < 6 ? "animate-pulseLine bg-gold/85" : "bg-white/10"}`}
-                  />
-                ))}
-              </div>
-              <p className="mt-4 text-sm leading-7 text-white/68">
-                {rotationStats.secondsPerSlot} secondi per slot. {rotationStats.rotationSecondsAtFullCapacity} secondi per un giro completo. Se gli slot attivi sono meno di 10, le visualizzazioni del tuo annuncio aumentano ancora.
-              </p>
-            </div>
-          </Reveal>
-
-          <div className="grid gap-4 sm:grid-cols-2">
-            {scarcityPoints.map((item) => (
-              <Reveal key={item}>
-                <div className="rounded-[28px] border border-white/10 bg-white/5 p-6">
-                  <p className="text-sm leading-7 text-white/72">{item}</p>
-                </div>
-              </Reveal>
-            ))}
-            {contentRules.slice(0, 2).map((item) => (
-              <Reveal key={item}>
-                <div className="rounded-[28px] border border-white/10 bg-black/20 p-6">
-                  <p className="text-sm leading-7 text-white/72">{item}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="px-5 py-10 md:px-8 md:py-16">
-        <div className="mx-auto max-w-7xl">
-          <Reveal>
-            <SectionHeading
-              eyebrow="A chi è utile"
-              title="Attività locali, eventi, promo, serate, locali."
-              description="Il formato si adatta bene a chi vuole essere notato nel posto giusto: ristoranti, lidi, negozi, discoteche, palestre, centri estetici e servizi del territorio."
-              align="center"
-            />
-          </Reveal>
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {categoryIcons.map((item) => {
-              const Icon = item.icon;
-              return (
-                <Reveal key={item.label}>
-                  <div className="rounded-[28px] border border-white/10 bg-white/5 p-5 text-center">
-                    <div className="mx-auto flex h-14 w-14 animate-float items-center justify-center rounded-2xl border border-gold/25 bg-gold/10 text-gold">
-                      <Icon className="h-6 w-6" />
-                    </div>
-                    <p className="mt-4 text-sm font-semibold text-white">{item.label}</p>
+                <div className="rounded-[30px] border border-white/10 bg-white/5 p-6">
+                  <p className="text-xs font-bold uppercase tracking-[0.24em] text-gold">{item.eyebrow}</p>
+                  <h3 className="mt-3 font-display text-3xl font-bold text-white">{item.title}</h3>
+                  <p className="mt-4 text-sm leading-7 text-white/68">{item.text}</p>
+                  <div className="mt-6">
+                    <ButtonLink href={item.href} variant="secondary">
+                      {item.label}
+                    </ButtonLink>
                   </div>
-                </Reveal>
-              );
-            })}
+                </div>
+              </Reveal>
+            ))}
           </div>
-          <div className="mt-8 text-center">
-            <ButtonLink href="/settori-ideali" variant="secondary">
-              Vedi i settori ideali
-            </ButtonLink>
+
+          <div className="mt-8 rounded-[30px] border border-gold/20 bg-gold/10 p-6 text-sm leading-7 text-white/82">
+            Vuoi partire da un evento, da una promo o da una singola settimana? Vai ai contatti, scegli il periodo e ricevi subito un riepilogo chiaro.
           </div>
         </div>
       </section>
 
       <CtaBanner
-        title="Pochi slot, posizione forte, rotazione continua."
-        text="Se vuoi capire subito quale mese o quale settimana ha più senso per la tua attività, vai ai contatti e seleziona il periodo direttamente nel form."
+        title="Hai capito come funziona. Ora ti serve solo il periodo giusto."
+        text="Controlla disponibilita, prezzo e possibile esclusiva direttamente nella pagina contatti."
       />
     </>
   );

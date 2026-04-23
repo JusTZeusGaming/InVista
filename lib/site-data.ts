@@ -84,8 +84,8 @@ export const monthlyData: MonthlyDatum[] = [
     monthlyReceipts: 6480,
     monthlyPeopleMin: 12960,
     peopleRange: "12.960+",
-    monthlyPrice: 59,
-    weeklyPrice: 19,
+    monthlyPrice: 150,
+    weeklyPrice: 43,
   },
   {
     month: "Giugno",
@@ -93,8 +93,8 @@ export const monthlyData: MonthlyDatum[] = [
     monthlyReceipts: 16080,
     monthlyPeopleMin: 32160,
     peopleRange: "32.160+",
-    monthlyPrice: 109,
-    weeklyPrice: 33,
+    monthlyPrice: 250,
+    weeklyPrice: 72,
   },
   {
     month: "Luglio",
@@ -103,8 +103,8 @@ export const monthlyData: MonthlyDatum[] = [
     monthlyPeopleMin: 52980,
     peopleRange: "52.980+",
     highlight: true,
-    monthlyPrice: 150,
-    weeklyPrice: 45,
+    monthlyPrice: 300,
+    weeklyPrice: 86,
   },
   {
     month: "Agosto",
@@ -113,8 +113,8 @@ export const monthlyData: MonthlyDatum[] = [
     monthlyPeopleMin: 58860,
     peopleRange: "58.860+",
     highlight: true,
-    monthlyPrice: 179,
-    weeklyPrice: 54,
+    monthlyPrice: 350,
+    weeklyPrice: 101,
   },
   {
     month: "Settembre",
@@ -122,8 +122,8 @@ export const monthlyData: MonthlyDatum[] = [
     monthlyReceipts: 14700,
     monthlyPeopleMin: 29400,
     peopleRange: "29.400+",
-    monthlyPrice: 109,
-    weeklyPrice: 33,
+    monthlyPrice: 150,
+    weeklyPrice: 43,
   },
 ];
 
@@ -191,7 +191,7 @@ export const scarcityPoints = [
 export const pricingPlans = [
   {
     name: "Periodo mensile",
-    price: "da 59 €",
+    price: "da 150 €",
     period: "/mese",
     highlight: true,
     badge: "Prezzo stagionale",
@@ -374,9 +374,9 @@ export const contentRules = [
 export const seasonalOffer = {
   label: "Intera stagione disponibile",
   period: "Maggio - Settembre",
-  fullPrice: 606,
-  discountedPrice: 515.1,
-  discountPercent: 15,
+  fullPrice: 1200,
+  discountedPrice: 950,
+  discountPercent: 20,
 };
 
 export const exclusivityExample = {

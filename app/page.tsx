@@ -33,6 +33,13 @@ function euro(value: number) {
   }).format(value);
 }
 
+function percent(value: number) {
+  return new Intl.NumberFormat("it-IT", {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  }).format(value);
+}
+
 const stepsIcons = [ShoppingCart, MonitorPlay, Eye];
 
 const quickProofs = [
@@ -76,7 +83,7 @@ const commercialCards = [
   },
   {
     eyebrow: "Stagione completa",
-    title: `${seasonalOffer.discountPercent}% di sconto sul totale`,
+    title: `${percent(seasonalOffer.discountPercent)}% di sconto sul totale`,
     text: `Sull'intero periodo ${seasonalOffer.period} il totale passa da ${euro(seasonalOffer.fullPrice)} a ${euro(seasonalOffer.discountedPrice)}.`,
     href: "/prezzi",
     label: "Guarda l'offerta",

@@ -22,6 +22,13 @@ function euro(value: number) {
   }).format(value);
 }
 
+function percent(value: number) {
+  return new Intl.NumberFormat("it-IT", {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  }).format(value);
+}
+
 export default function PricingPage() {
   return (
     <>
@@ -157,7 +164,7 @@ export default function PricingPage() {
               <p className="text-xs font-bold uppercase tracking-[0.28em] text-gold">Stagione completa</p>
               <h2 className="mt-4 font-display text-4xl font-bold text-white">Se ci sei tutta la stagione, spendi meno.</h2>
               <p className="mt-5 max-w-2xl text-base leading-8 text-white/74">
-                Sull’intero periodo disponibile ({seasonalOffer.period}) viene applicato uno sconto del {seasonalOffer.discountPercent}%.
+                Sull’intero periodo disponibile ({seasonalOffer.period}) viene applicato uno sconto del {percent(seasonalOffer.discountPercent)}%.
               </p>
               <div className="mt-8 grid gap-4 md:grid-cols-2">
                 <div className="rounded-[24px] border border-white/10 bg-black/20 p-5">
@@ -184,7 +191,7 @@ export default function PricingPage() {
                 </p>
                 <p className="mt-3 text-sm leading-7 text-white/66">{exclusivityExample.text}</p>
                 <div className="mt-5 rounded-[22px] border border-white/10 bg-black/20 p-4 text-sm text-white/70">
-                  Esempio rapido: agosto a {euro(179)} diventa <span className="font-semibold text-white">{euro(179 * 1.35)}</span> con esclusiva.
+                  Esempio rapido: agosto a {euro(350)} diventa <span className="font-semibold text-white">{euro(350 * 1.35)}</span> con esclusiva.
                 </div>
               </div>
             </Reveal>

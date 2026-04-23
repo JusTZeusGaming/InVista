@@ -33,6 +33,13 @@ function formatCurrency(value: number) {
   }).format(value);
 }
 
+function formatPercent(value: number) {
+  return new Intl.NumberFormat("it-IT", {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  }).format(value);
+}
+
 function formatDateRange(start: Date, end: Date) {
   return `${start.getDate()} ${monthLabelMap[start.getMonth()]} - ${end.getDate()} ${monthLabelMap[end.getMonth()]}`;
 }
@@ -399,7 +406,7 @@ export function ContactForm() {
         <p className="mt-2">
           Se prenoti l’intera stagione disponibile ({seasonalOffer.period}), il totale passa da {formatCurrency(seasonalOffer.fullPrice)} a{" "}
           <span className="font-semibold text-white">{formatCurrency(seasonalOffer.discountedPrice)}</span> grazie allo sconto del{" "}
-          {seasonalOffer.discountPercent}%.
+          {formatPercent(seasonalOffer.discountPercent)}%.
         </p>
       </div>
 

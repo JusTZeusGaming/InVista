@@ -36,8 +36,8 @@ function euro(value: number) {
 const stepsIcons = [ShoppingCart, MonitorPlay, Eye];
 
 const quickProofs = [
-  "Supermercato altamente frequentato",
-  "Forte presenza turistica",
+  "Punto altamente turistico",
+  "Flusso reale e continuo",
   "Massimo 10 attività in rotazione",
 ];
 
@@ -107,12 +107,12 @@ export default function HomePage() {
               </div>
 
               <h1 className="max-w-5xl font-display text-5xl font-bold leading-[0.94] tracking-tight text-white md:text-7xl">
-                Pubblicita su schermo dentro un supermercato altamente frequentato, nel pieno del flusso locale e turistico.
+                La tua pubblicita nel pieno del flusso turistico di Torre Lapillo.
               </h1>
 
               <p className="mt-6 max-w-3xl text-lg leading-8 text-white/74 md:text-xl">
-                Il tuo annuncio gira ogni giorno dentro {venueInfo.name}, a {venueInfo.place}, sopra la cassa, in un supermercato molto frequentato e fortemente turistico.
-                Fin dal primo impatto si capisce dove appare, da chi viene visto e perche il passaggio stagionale conta davvero.
+                Il tuo annuncio gira ogni giorno a {venueInfo.place}, in un punto vendita inserito in un'area molto vissuta, fortemente turistica e con passaggio costante per tutta la stagione.
+                Parliamo di oltre {formatNumber(seasonPeople)} presenze reali stimate in stagione<FootnoteMark />: persone vere, presenti davvero sul posto, non traffico online generico.
               </p>
 
               <div className="mt-8 flex flex-wrap gap-3">
@@ -130,7 +130,7 @@ export default function HomePage() {
                 </div>
                 <div className="rounded-[24px] border border-white/10 bg-white/5 p-4">
                   <div className="font-display text-3xl font-bold text-white">{formatNumber(seasonPeople)}+</div>
-                  <p className="mt-2 text-sm font-medium text-white/70">Presenze minime stimate sull'intera stagione</p>
+                  <p className="mt-2 text-sm font-medium text-white/70">Presenze reali stimate e verificate nello store</p>
                   <p className="mt-1 text-xs uppercase tracking-[0.18em] text-gold">Maggio - Settembre<FootnoteMark /></p>
                 </div>
                 <div className="rounded-[24px] border border-white/10 bg-white/5 p-4">
@@ -147,7 +147,7 @@ export default function HomePage() {
               <div className="rounded-[30px] border border-white/10 bg-black/30 p-6">
                 <p className="text-xs font-bold uppercase tracking-[0.28em] text-gold">Impatto stagionale</p>
                 <h2 className="mt-4 font-display text-3xl font-bold text-white md:text-4xl">
-                  Un supermercato che lavora forte per tutta la stagione.
+                  Una posizione che concentra flusso, attesa e attenzione.
                 </h2>
 
                 <div className="mt-8 grid gap-4">
@@ -164,7 +164,7 @@ export default function HomePage() {
                   <div className="rounded-[24px] border border-white/10 bg-white/5 p-5">
                     <div className="flex items-center gap-3 text-white">
                       <ShoppingCart className="h-5 w-5 text-gold" />
-                      <span className="text-sm font-semibold">Supermercato reale e turistico</span>
+                      <span className="text-sm font-semibold">Punto reale ad alta intensita turistica</span>
                     </div>
                     <p className="mt-3 text-sm leading-7 text-white/68">
                       {venueInfo.name} intercetta pubblico locale, turistico e di passaggio, con un flusso che cresce fortemente nei mesi centrali della stagione.

@@ -36,9 +36,9 @@ function euro(value: number) {
 const stepsIcons = [ShoppingCart, MonitorPlay, Eye];
 
 const quickProofs = [
-  "Schermo sopra la cassa",
+  "Supermercato altamente frequentato",
+  "Forte presenza turistica",
   "Massimo 10 attività in rotazione",
-  "Pubblico locale e turistico",
 ];
 
 const whyItWorks = [
@@ -86,6 +86,8 @@ const commercialCards = [
 export default function HomePage() {
   const july = monthlyData.find((item) => item.month === "Luglio") ?? monthlyData[2];
   const august = monthlyData.find((item) => item.month === "Agosto") ?? monthlyData[3];
+  const seasonReceipts = monthlyData.reduce((sum, item) => sum + item.monthlyReceipts, 0);
+  const seasonPeople = monthlyData.reduce((sum, item) => sum + item.monthlyPeopleMin, 0);
 
   return (
     <>
@@ -105,12 +107,12 @@ export default function HomePage() {
               </div>
 
               <h1 className="max-w-5xl font-display text-5xl font-bold leading-[0.94] tracking-tight text-white md:text-7xl">
-                Pubblicita su schermo dentro un supermercato reale.
+                Pubblicita su schermo dentro un supermercato altamente frequentato, nel pieno del flusso locale e turistico.
               </h1>
 
               <p className="mt-6 max-w-3xl text-lg leading-8 text-white/74 md:text-xl">
-                Il tuo annuncio gira ogni giorno dentro {venueInfo.name}, a {venueInfo.place}, sopra la cassa, davanti a clienti veri.
-                Non online. Non da scrollare. Dentro il punto vendita.
+                Il tuo annuncio gira ogni giorno dentro {venueInfo.name}, a {venueInfo.place}, sopra la cassa, in un supermercato molto frequentato e fortemente turistico.
+                Fin dal primo impatto si capisce dove appare, da chi viene visto e perche il passaggio stagionale conta davvero.
               </p>
 
               <div className="mt-8 flex flex-wrap gap-3">
@@ -122,19 +124,19 @@ export default function HomePage() {
 
               <div className="mt-10 grid gap-4 sm:grid-cols-3">
                 <div className="rounded-[24px] border border-white/10 bg-white/5 p-4">
+                  <div className="font-display text-3xl font-bold text-white">{formatNumber(seasonReceipts)}</div>
+                  <p className="mt-2 text-sm font-medium text-white/70">Scontrini registrati sull'intera stagione</p>
+                  <p className="mt-1 text-xs uppercase tracking-[0.18em] text-gold">Maggio - Settembre<FootnoteMark /></p>
+                </div>
+                <div className="rounded-[24px] border border-white/10 bg-white/5 p-4">
+                  <div className="font-display text-3xl font-bold text-white">{formatNumber(seasonPeople)}+</div>
+                  <p className="mt-2 text-sm font-medium text-white/70">Presenze minime stimate sull'intera stagione</p>
+                  <p className="mt-1 text-xs uppercase tracking-[0.18em] text-gold">Maggio - Settembre<FootnoteMark /></p>
+                </div>
+                <div className="rounded-[24px] border border-white/10 bg-white/5 p-4">
                   <div className="font-display text-3xl font-bold text-white">522</div>
                   <p className="mt-2 text-sm font-medium text-white/70">Visualizzazioni del tuo annuncio al giorno</p>
                   <p className="mt-1 text-xs uppercase tracking-[0.18em] text-gold">Con rotazione piena</p>
-                </div>
-                <div className="rounded-[24px] border border-white/10 bg-white/5 p-4">
-                  <div className="font-display text-3xl font-bold text-white">58.860+</div>
-                  <p className="mt-2 text-sm font-medium text-white/70">Presenze minime stimate nel mese piu forte</p>
-                  <p className="mt-1 text-xs uppercase tracking-[0.18em] text-gold">Agosto<FootnoteMark /></p>
-                </div>
-                <div className="rounded-[24px] border border-white/10 bg-white/5 p-4">
-                  <div className="font-display text-3xl font-bold text-white">10</div>
-                  <p className="mt-2 text-sm font-medium text-white/70">Attivita massime in rotazione</p>
-                  <p className="mt-1 text-xs uppercase tracking-[0.18em] text-gold">Slot limitati</p>
                 </div>
               </div>
             </div>
@@ -143,39 +145,39 @@ export default function HomePage() {
           <Reveal className="lg:pl-8">
             <div className="rounded-[36px] border border-white/10 bg-gradient-to-br from-white/10 to-white/[0.03] p-6 shadow-glow">
               <div className="rounded-[30px] border border-white/10 bg-black/30 p-6">
-                <p className="text-xs font-bold uppercase tracking-[0.28em] text-gold">Capirlo in 10 secondi</p>
+                <p className="text-xs font-bold uppercase tracking-[0.28em] text-gold">Impatto stagionale</p>
                 <h2 className="mt-4 font-display text-3xl font-bold text-white md:text-4xl">
-                  Cosa compri, in pratica.
+                  Un supermercato che lavora forte per tutta la stagione.
                 </h2>
 
                 <div className="mt-8 grid gap-4">
-                  <div className="rounded-[24px] border border-white/10 bg-white/5 p-5">
-                    <div className="flex items-center gap-3 text-white">
-                      <MonitorPlay className="h-5 w-5 text-gold" />
-                      <span className="text-sm font-semibold">Uno spazio sullo schermo</span>
+                  <div className="rounded-[24px] border border-gold/20 bg-gold/10 p-5">
+                    <p className="text-sm uppercase tracking-[0.24em] text-white/45">Scontrini stagionali</p>
+                    <div className="mt-3 font-display text-5xl font-bold text-white">
+                      <AnimatedCounter value={seasonReceipts} />
                     </div>
-                    <p className="mt-3 text-sm leading-7 text-white/68">
-                      1 slot = massimo 10 secondi. Il contenuto lo invia l'attivita gia pronto.
+                    <p className="mt-3 text-sm leading-7 text-white/75">
+                      Totale registrato da maggio a settembre<FootnoteMark />, in un supermercato ad alta affluenza.
                     </p>
                   </div>
 
                   <div className="rounded-[24px] border border-white/10 bg-white/5 p-5">
                     <div className="flex items-center gap-3 text-white">
                       <ShoppingCart className="h-5 w-5 text-gold" />
-                      <span className="text-sm font-semibold">Dentro {venueInfo.name}</span>
+                      <span className="text-sm font-semibold">Supermercato reale e turistico</span>
                     </div>
                     <p className="mt-3 text-sm leading-7 text-white/68">
-                      Lo schermo e sopra la cassa, nel punto in cui la gente si ferma davvero.
+                      {venueInfo.name} intercetta pubblico locale, turistico e di passaggio, con un flusso che cresce fortemente nei mesi centrali della stagione.
                     </p>
                   </div>
 
-                  <div className="rounded-[24px] border border-gold/20 bg-gold/10 p-5">
+                  <div className="rounded-[24px] border border-white/10 bg-white/5 p-5">
                     <div className="flex items-center gap-3 text-white">
-                      <BarChart3 className="h-5 w-5 text-gold" />
-                      <span className="text-sm font-semibold">Numeri basati su scontrini reali</span>
+                      <MonitorPlay className="h-5 w-5 text-gold" />
+                      <span className="text-sm font-semibold">Schermo sopra la cassa</span>
                     </div>
-                    <p className="mt-3 text-sm leading-7 text-white/75">
-                      Le stime partono dai corrispettivi ufficiali della stagione precedente, non da impression inventate.
+                    <p className="mt-3 text-sm leading-7 text-white/68">
+                      Il messaggio gira nel punto in cui la gente rallenta, guarda e resta esposta allo schermo piu a lungo.
                     </p>
                   </div>
                 </div>
